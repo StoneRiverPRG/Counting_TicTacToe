@@ -4,6 +4,7 @@
 # Get greater count of three in a row!
 
 # TODO: #1 class化
+# ToDo: 2ゲーム目入ったときの検出、初期化
 
 import sys
 import math
@@ -20,7 +21,7 @@ class GameState(Enum):
     GAME = auto()
     PLAYER_WIN = 'PLAYER_WIN'
     AI_WIN = 'AI_WIN'
-    DRAW = 'DRAW'
+    FULL = 'FULL'
 
 class Board():
 
@@ -95,12 +96,25 @@ class TicTacToe():
         self.playboard.print_Board()
 
     # TODO: ○ or ×をrow, col に置く. Player or AIでO X 変える.
-    def put_hand(self, row, col):
-        pass
+    def put_hand(self, player, row, col):
+        if player == True:
+            hand = BoardState.PLAYER
+        else:
+            hand = BoardState.AI
+        if not self.can_put_hand(row, col):
+            print(f"Error can_put_hand {row}, {col}", file=sys.stderr)
+        # TODO:boardに値を更新
 
     # row, colがBLANKならTrue
     def can_put_hand(self, row, col):
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
+
+    # TODO: 3 lineをカウントする.Player or AI?
+    def judge(self):
+        pass
+
+    def check_state(self):
+        pass
 
     # プレイヤーの入力
     def player_input(self):
@@ -141,7 +155,7 @@ class TicTacToe():
                     return
 
         if all(BoardState.BLANK != state for state in self.board):
-            self.state = GameState.DRAW
+            self.state = GameState.FULL
             return
 
         self.state = GameState.GAME
