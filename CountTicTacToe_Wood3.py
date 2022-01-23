@@ -94,11 +94,13 @@ class TicTacToe():
         # クラスBoard内のprint関数でboard表示
         self.playboard.print_Board()
 
-    # TODO: ○ or ×を置く
+    # TODO: ○ or ×をrow, col に置く
     def put_hand(self, row, col):
         pass
 
-
+    # row, colがBLANKならTrue
+    def can_put_hand(self, row, col):
+        return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
     # プレイヤーの入力
     def player_input(self):
