@@ -94,7 +94,7 @@ class TicTacToe():
         # クラスBoard内のprint関数でboard表示
         self.playboard.print_Board()
 
-    # TODO: ○ or ×をrow, col に置く
+    # TODO: ○ or ×をrow, col に置く. Player or AIでO X 変える.
     def put_hand(self, row, col):
         pass
 
@@ -118,10 +118,6 @@ class TicTacToe():
     # ターンを交代する
     def change_turn(self):
         self.my_turn = not(self.my_turn)
-
-    # valueがBLANKならTrue
-    def can_put_value(self, value):
-        return True if self.board[value] == BoardState.BLANK else False
 
     # valueに置く
     def put_value(self, value):
