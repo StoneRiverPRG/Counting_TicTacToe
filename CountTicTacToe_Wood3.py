@@ -26,6 +26,7 @@ class Board():
 
     def __init__(self):
         # ボードの初期化
+
         self.size = 10
         self.board = [[BoardState.BLANK for _ in range(self.size)] for _ in range(self.size)]
 
@@ -44,10 +45,13 @@ class Board():
         print("", file=sys.stderr)
 
 
+
 class TicTacToe():
 
     def __init__(self):
+
         self.playboard = Board()
+
         # 先攻後攻
         self.my_turn = True
         # ゲーム開始
@@ -67,7 +71,6 @@ class TicTacToe():
 
             # 盤面表示
             self.display_board()
-
 
             print(self.valid_actions[0][0], self.valid_actions[0][1])
 
