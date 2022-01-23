@@ -1,32 +1,148 @@
 # https://www.codingame.com/multiplayer/bot-programming/counting-tictactoe
 
 # Counting TicTacToe Wood 3 League
+# Get greater count of three in a row!
 
 # TODO: #1 class化
-# TODO: node
-
 
 import sys
 import math
+from enum import Enum, auto
 
-# Get greater count of three in a row!
+# マスの状態
+class BoardState(Enum):
+    BLANK = auto()
+    PLAYER = auto()
+    AI = auto()
+
+# ゲームの状態
+class GameState(Enum):
+    GAME = auto()
+    PLAYER_WIN = 'PLAYER_WIN'
+    AI_WIN = 'AI_WIN'
+    DRAW = 'DRAW'
+
+class Board():
+
+    def __init__(self):
+        # ボードの初期化
+        self.size = 10
+        self.board = [[BoardState.BLANK for _ in range(self.size)] for _ in range(self.size)]
+
+    # 盤面の表示 OX
+    def print_Board(self):
+        for row in self.board:
+            tmp_str = ""
+            for col in row:
+                if col == BoardState.BLANK:
+                    tmp_str += " "
+                elif col == BoardState.PLAYER:
+                    tmp_str += "O"
+                elif col == BoardState.AI:
+                    tmp_str += "X"
+            print(tmp_str, file=sys.stderr)
+        print("", file=sys.stderr)
 
 
-# game loop
-while True:
-    # opponent_row: The coordinates of your opponent's last move
-    opponent_row, opponent_col = [int(i) for i in input().split()]
-    valid_action_count = int(input())  # the number of possible actions for your next move
-    valid_actions = []
-    for i in range(valid_action_count):
-        # row: The coordinates of a possible next move
-        row, col = [int(j) for j in input().split()]
-        valid_actions.append((row, col))
-    # Write an action using print
-    # To debug: print("Debug messages...", file=sys.stderr, flush=True)
 
-    # <row> <column>
-    print(f"{valid_actions[0][0]} {valid_actions[0][1]}")
+class TicTacToe():
+
+    def __init__(self):
+        self.playboard = Board()
+        # 先攻後攻
+        self.my_turn = True
+        # ゲーム開始
+        self.state = GameState.GAME
+
+    def main(self):
+        # game loop
+        while True:
+            # opponent_row: The coordinates of your opponent's last move
+            self.opponent_row, self.opponent_col = [int(i) for i in input().split()]
+            self.valid_action_count = int(input())  # the number of possible actions for your next move
+            self.valid_actions = []
+            for _ in range(self.valid_action_count):
+                # row: The coordinates of a possible next move
+                row, col = [int(j) for j in input().split()]
+                self.valid_actions.append((row, col))
+
+            # 盤面表示
+            self.display_board()
+
+
+            print(self.valid_actions[0][0], self.valid_actions[0][1])
+
+        """
+        while self.state == GameState.GAME:
+            if self.my_turn:
+                # 先攻
+                self.player_input()
+            else:
+                # 後攻
+                self.player_input()
+            self.display_board()
+        print(self.state)
+        """
+
+
+    #TODO: #2 ボードを表示する
+    def display_board(self):
+        # クラスBoard内のprint関数でboard表示
+        self.playboard.print_Board()
+
+
+
+    # プレイヤーの入力
+    def player_input(self):
+        while True:
+            try:
+                value = int(input('please input value'))
+                if self.can_put_value(value):
+                    self.put_value(value)
+                    break
+                else:
+                    print('do not put')
+            except:
+                print('attribute error')
+
+    # ターンを交代する
+    def change_turn(self):
+        self.my_turn = not(self.my_turn)
+
+    # valueがBLANKならTrue
+    def can_put_value(self, value):
+        return True if self.board[value] == BoardState.BLANK else False
+
+    # valueに置く
+    def put_value(self, value):
+        self.board[value] = BoardState.PLAYER if self.my_turn else BoardState.AI
+        self.check_state()
+        self.change_turn()
+
+    # 勝敗がついているならTrue
+    def judge(self, a, b, c):
+          return True if a == b == c and a != BoardState.BLANK else False
+
+    # ゲームの状態を更新
+    def check_state(self):
+        for i in range(3):
+            if self.judge(*self.board[i:9:3]) or self.judge(*self.board[3*i:3*i+3]) or self.judge(*self.board[0:9:4]) or self.judge(*self.board[2:7:2]):
+                if self.my_turn:
+                    self.state = GameState.PLAYER_WIN
+                    return
+                else:
+                    self.state = GameState.AI_WIN
+                    return
+
+        if all(BoardState.BLANK != state for state in self.board):
+            self.state = GameState.DRAW
+            return
+
+        self.state = GameState.GAME
+
+
+tictactoe = TicTacToe()
+tictactoe.main()
 
 
 
