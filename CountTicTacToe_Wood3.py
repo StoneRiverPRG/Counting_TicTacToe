@@ -26,17 +26,32 @@ class Board():
 
     def __init__(self):
         # ボードの初期化
-        self.board = [[BoardState.BLANK for _ in range(10)] for _ in range(10)]
 
+        self.size = 10
+        self.board = [[BoardState.BLANK for _ in range(self.size)] for _ in range(self.size)]
+
+    # 盤面の表示 OX
     def print_Board(self):
-        pass
+        for row in self.board:
+            tmp_str = ""
+            for col in row:
+                if col == BoardState.BLANK:
+                    tmp_str += " "
+                elif col == BoardState.PLAYER:
+                    tmp_str += "O"
+                elif col == BoardState.AI:
+                    tmp_str += "X"
+            print(tmp_str, file=sys.stderr)
+        print("", file=sys.stderr)
 
 
 
 class TicTacToe():
 
     def __init__(self):
-        self.board = Board()
+
+        self.playboard = Board()
+
         # 先攻後攻
         self.my_turn = True
         # ゲーム開始
@@ -53,6 +68,9 @@ class TicTacToe():
                 # row: The coordinates of a possible next move
                 row, col = [int(j) for j in input().split()]
                 self.valid_actions.append((row, col))
+
+            # 盤面表示
+            self.display_board()
 
             print(self.valid_actions[0][0], self.valid_actions[0][1])
 
@@ -71,14 +89,10 @@ class TicTacToe():
 
     #TODO: #2 ボードを表示する
     def display_board(self):
-        tmp = []
-        for i in range(9):
-            if self.board[i] == BoardState.BLANK:
-                tmp.append('  ')
-            elif self.board[i] == BoardState.PLAYER:
-                tmp.append('o')
-            elif self.board[i] == BoardState.AI:
-                tmp.append('x')
+        # クラスBoard内のprint関数でboard表示
+        self.playboard.print_Board()
+
+
 
     # プレイヤーの入力
     def player_input(self):
