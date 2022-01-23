@@ -5,6 +5,8 @@
 
 # TODO: #1 class化
 # ToDo: 2ゲーム目入ったときの検出、初期化
+# ToDo: inputまとめられる？
+# ToDo: 先攻後攻flag
 
 import sys
 import math
