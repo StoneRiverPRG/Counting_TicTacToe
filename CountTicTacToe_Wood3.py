@@ -44,7 +44,6 @@ class Board():
         print("", file=sys.stderr)
 
 
-
 class TicTacToe():
 
     def __init__(self):
