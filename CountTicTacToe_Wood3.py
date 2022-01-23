@@ -26,7 +26,6 @@ class Board():
 
     def __init__(self):
         # ボードの初期化
-
         self.size = 10
         self.board = [[BoardState.BLANK for _ in range(self.size)] for _ in range(self.size)]
 
@@ -49,11 +48,9 @@ class Board():
 class TicTacToe():
 
     def __init__(self):
-
         self.playboard = Board()
-
         # 先攻後攻
-        self.my_turn = True
+        self.my_turn = False
         # ゲーム開始
         self.state = GameState.GAME
 
@@ -62,6 +59,11 @@ class TicTacToe():
         while True:
             # opponent_row: The coordinates of your opponent's last move
             self.opponent_row, self.opponent_col = [int(i) for i in input().split()]
+
+            # 先攻後攻初期化
+            if (self.opponent_row, self.opponent_col) == (-1, -1):
+                self.my_turn = True
+
             self.valid_action_count = int(input())  # the number of possible actions for your next move
             self.valid_actions = []
             for _ in range(self.valid_action_count):
