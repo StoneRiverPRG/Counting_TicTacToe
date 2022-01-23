@@ -94,6 +94,10 @@ class TicTacToe():
         # クラスBoard内のprint関数でboard表示
         self.playboard.print_Board()
 
+    # TODO: ○ or ×を置く
+    def put_hand(self, row, col):
+        pass
+
 
 
     # プレイヤーの入力
