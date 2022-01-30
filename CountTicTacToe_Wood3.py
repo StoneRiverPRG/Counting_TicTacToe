@@ -60,21 +60,27 @@ class TicTacToe():
     def main(self):
         # game loop
         while True:
+            # 情報Input
+
+            # AI Input
             # opponent_row: The coordinates of your opponent's last move
             self.opponent_row, self.opponent_col = [int(i) for i in input().split()]
 
-            # 先攻後攻初期化
-            if (self.opponent_row, self.opponent_col) == (-1, -1):
-                self.my_turn = True
-            else:
-                self.put_hand(False, self.opponent_row, self.opponent_col)
-
+            # 指せる手の候補Input
             self.valid_action_count = int(input())  # the number of possible actions for your next move
             self.valid_actions = []
             for _ in range(self.valid_action_count):
                 # row: The coordinates of a possible next move
                 row, col = [int(j) for j in input().split()]
                 self.valid_actions.append((row, col))
+
+            # Action部分
+            # 先攻後攻初期化
+            if (self.opponent_row, self.opponent_col) == (-1, -1):
+                self.my_turn = True
+            else:
+                self.put_hand(False, self.opponent_row, self.opponent_col)
+
 
             print(self.valid_actions[0][0], self.valid_actions[0][1])
             # Player put_hand
