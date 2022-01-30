@@ -66,6 +66,8 @@ class TicTacToe():
             # 先攻後攻初期化
             if (self.opponent_row, self.opponent_col) == (-1, -1):
                 self.my_turn = True
+            else:
+                self.put_hand(False, self.opponent_row, self.opponent_col)
 
             self.valid_action_count = int(input())  # the number of possible actions for your next move
             self.valid_actions = []
@@ -74,11 +76,12 @@ class TicTacToe():
                 row, col = [int(j) for j in input().split()]
                 self.valid_actions.append((row, col))
 
+            print(self.valid_actions[0][0], self.valid_actions[0][1])
+            # Player put_hand
+            self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
+
             # 盤面表示
             self.display_board()
-
-            print(self.valid_actions[0][0], self.valid_actions[0][1])
-            self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
 
         """
         while self.state == GameState.GAME:
