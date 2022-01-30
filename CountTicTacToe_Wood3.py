@@ -128,7 +128,7 @@ class TicTacToe():
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
     # TODO #8 : 3lineをカウントする.Player or AI?
-    def judge(self):
+    def Check_Lines(self, player=True):
         pass
 
     def check_state(self):
