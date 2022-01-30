@@ -129,16 +129,33 @@ class TicTacToe():
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
     # TODO #8 : 3lineをカウントする.Player or AI?
-    # check three continus value
+    # check three continuous value
     def Check_Lines(self, player=True):
         num_three = 0
+        continuous = 0
+        hand = BoardState.PLAYER if player else BoardState.AI
 
         # check horizen lines
+        num_horizen = 0
+        for hrzn in self.playboard.board:
+            for mark in hrzn:
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_horizen += 1
+                else:
+                    continuous = 0
+            continuous = 0
 
         # check vertical lines
 
         # check diagonal(#1) lines
         # check diagonal(#2) lines
+
+        num_three = num_horizen
+
+        return num_three
+
 
     def check_state(self):
         pass
