@@ -149,6 +149,7 @@ class TicTacToe():
 
         # check vertical lines
         num_vertical = 0
+        continuous = 0
         for i in range(self.playboard.size):
             for vert in self.playboard.board:
                 mark = vert[i]
@@ -160,11 +161,18 @@ class TicTacToe():
                     continuous = 0
             continuous = 0
 
-
         # check diagonal(#1) lines
-        # check diagonal(#2) lines
+        num_diagonal1 = 0
+        continuous = 0
+        """for diag in range(self.playboard.size):"""
 
-        num_three = num_horizen + num_vertical
+
+
+        # check diagonal(#2) lines
+        num_diagonal2 = 0
+        continuous = 0
+
+        num_three = num_horizen + num_vertical + num_diagonal1 + num_diagonal2
 
         return num_three
 
