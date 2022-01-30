@@ -62,10 +62,12 @@ class TicTacToe():
         while True:
             # 情報Input
 
+            # TODO: #11 AI Input関数化する
             # AI Input
             # opponent_row: The coordinates of your opponent's last move
             self.opponent_row, self.opponent_col = [int(i) for i in input().split()]
 
+            # TODO: #12 Player Input候補リスト化する関数つくる
             # 指せる手の候補Input
             self.valid_action_count = int(input())  # the number of possible actions for your next move
             self.valid_actions = []
