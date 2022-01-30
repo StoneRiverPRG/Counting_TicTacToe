@@ -78,6 +78,7 @@ class TicTacToe():
             self.display_board()
 
             print(self.valid_actions[0][0], self.valid_actions[0][1])
+            self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
 
         """
         while self.state == GameState.GAME:
@@ -106,7 +107,10 @@ class TicTacToe():
             hand = BoardState.AI
         if not self.can_put_hand(row, col):
             print(f"Error can_put_hand {row}, {col}", file=sys.stderr)
+            return
+
         # TODO #7:boardに値を更新
+        self.playboard.board[row][col] = hand
 
     # row, colがBLANKならTrue
     def can_put_hand(self, row, col):
