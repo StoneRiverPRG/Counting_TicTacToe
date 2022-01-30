@@ -97,7 +97,8 @@ class TicTacToe():
         # クラスBoard内のprint関数でboard表示
         self.playboard.print_Board()
 
-    # TODO: ○ or ×をrow, col に置く. Player or AIでO X 変える.
+    # TODO: #5 ○ or ×をrow, col に置く.
+    # TODO: #6 Player or AIでO X 変える.
     def put_hand(self, player, row, col):
         if player == True:
             hand = BoardState.PLAYER
@@ -105,13 +106,13 @@ class TicTacToe():
             hand = BoardState.AI
         if not self.can_put_hand(row, col):
             print(f"Error can_put_hand {row}, {col}", file=sys.stderr)
-        # TODO:boardに値を更新
+        # TODO #7:boardに値を更新
 
     # row, colがBLANKならTrue
     def can_put_hand(self, row, col):
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
-    # TODO: 3 lineをカウントする.Player or AI?
+    # TODO #8 : 3lineをカウントする.Player or AI?
     def judge(self):
         pass
 
