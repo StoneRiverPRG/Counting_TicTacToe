@@ -123,13 +123,22 @@ class TicTacToe():
         # TODO #7:boardに値を更新
         self.playboard.board[row][col] = hand
 
-    # row, colがBLANKならTrue
+    # TODO: #14 row , colがboard list の範囲内かチェックする
+    # (row, col)がBLANKならTrue
     def can_put_hand(self, row, col):
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
     # TODO #8 : 3lineをカウントする.Player or AI?
+    # check three continus value
     def Check_Lines(self, player=True):
-        pass
+        num_three = 0
+
+        # check horizen lines
+
+        # check vertical lines
+
+        # check diagonal(#1) lines
+        # check diagonal(#2) lines
 
     def check_state(self):
         pass
