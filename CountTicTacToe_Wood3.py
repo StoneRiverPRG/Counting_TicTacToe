@@ -77,6 +77,7 @@ class TicTacToe():
                 self.valid_actions.append((row, col))
 
             print(self.valid_actions[0][0], self.valid_actions[0][1])
+            # Player put_hand
             self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
 
             # 盤面表示
