@@ -128,6 +128,10 @@ class TicTacToe():
     # TODO: #14 row , colがboard list の範囲内かチェックする
     # (row, col)がBLANKならTrue
     def can_put_hand(self, row, col):
+        # row と col がboard list の範囲内か確認
+        if not (0 <= row < self.playboard.size) and (0 <= col < self.playboard.size):
+            print("row or col is out of list.", file=sys.stderr)
+            return False
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
     # TODO #8 : 3lineをカウントする.Player or AI?
