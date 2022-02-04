@@ -200,7 +200,7 @@ class TicTacToe():
 
         return num_three
 
-
+    # TODO #16 : チェックステイト機能追加、ゲームリセット機能追加する
     def check_state(self):
         pass
 
