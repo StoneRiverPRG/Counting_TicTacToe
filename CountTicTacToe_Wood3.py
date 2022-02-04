@@ -87,6 +87,8 @@ class TicTacToe():
             print(self.valid_actions[0][0], self.valid_actions[0][1])
             # Player put_hand
             self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
+            num_three = self.Check_Lines(True)
+            print(f"Lines = {num_three}",file=sys.stderr)
 
             # 盤面表示
             self.display_board()
@@ -123,13 +125,81 @@ class TicTacToe():
         # TODO #7:boardに値を更新
         self.playboard.board[row][col] = hand
 
-    # row, colがBLANKならTrue
+    # TODO: #14 row , colがboard list の範囲内かチェックする
+    # (row, col)がBLANKならTrue
     def can_put_hand(self, row, col):
         return True if self.playboard.board[row][col] == BoardState.BLANK else False
 
     # TODO #8 : 3lineをカウントする.Player or AI?
+
+    # check three continuous value
     def Check_Lines(self, player=True):
-        pass
+        num_three = 0
+        continuous = 0
+        hand = BoardState.PLAYER if player else BoardState.AI
+        b_size = self.playboard.size
+
+        # check horizen lines
+        num_horizen = 0
+        for hrzn in self.playboard.board:
+            for mark in hrzn:
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_horizen += 1
+                else:
+                    continuous = 0
+            continuous = 0
+
+        # check vertical lines
+        num_vertical = 0
+        continuous = 0
+        for i in range(self.playboard.size):
+            for vert in self.playboard.board:
+                mark = vert[i]
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_vertical += 1
+                else:
+                    continuous = 0
+            continuous = 0
+
+        # check diagonal(#1) lines
+        num_diagonal1 = 0
+        continuous = 0
+        for c in range(b_size * 2 - 3):
+            for i in range(c + 1):
+                if i > (b_size - 1) or (c - i) > (b_size - 1) or (c - i) < 0:
+                    continue
+                mark = self.playboard.board[0 + i][c - i]
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_diagonal1 += 1
+                else:
+                    continuous = 0
+            continuous = 0
+
+        # check diagonal(#2) lines
+        num_diagonal2 = 0
+        continuous = 0
+        for c in range(b_size * 2 - 3):
+            for i in range(c + 1):
+                if (b_size - 1 - i) < 0 or (c - i) > (b_size - 1) or (c - i) < 0:
+                    continue
+                mark = self.playboard.board[(b_size - 1) - i][c - i]
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_diagonal2 += 1
+                else:
+                    continuous = 0
+            continuous = 0
+        num_three = num_horizen + num_vertical + num_diagonal1 + num_diagonal2
+
+        return num_three
+
 
     def check_state(self):
         pass
