@@ -134,6 +134,7 @@ class TicTacToe():
         num_three = 0
         continuous = 0
         hand = BoardState.PLAYER if player else BoardState.AI
+        b_size = self.playboard.size
 
         # check horizen lines
         num_horizen = 0
@@ -164,7 +165,20 @@ class TicTacToe():
         # check diagonal(#1) lines
         num_diagonal1 = 0
         continuous = 0
-        """for diag in range(self.playboard.size):"""
+        for c in range(b_size * 2 - 3):
+            for i in range(c + 1):
+                if i > (b_size - 1) or (c - i) > (b_size - 1) or (c - i) < 0:
+                    continue
+                mark = self.playboard.board[0 + i][c - i]
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_diagonal1 += 1
+                else:
+                    continuous = 0
+            continuous = 0
+
+
 
 
 
