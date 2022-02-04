@@ -87,6 +87,8 @@ class TicTacToe():
             print(self.valid_actions[0][0], self.valid_actions[0][1])
             # Player put_hand
             self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
+            num_three = self.Check_Lines(True)
+            print(f"Lines = {num_three}",file=sys.stderr)
 
             # 盤面表示
             self.display_board()
