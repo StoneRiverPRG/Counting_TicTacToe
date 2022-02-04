@@ -178,14 +178,21 @@ class TicTacToe():
                     continuous = 0
             continuous = 0
 
-
-
-
-
         # check diagonal(#2) lines
         num_diagonal2 = 0
         continuous = 0
-
+        for c in range(b_size * 2 - 3):
+            for i in range(c + 1):
+                if (b_size - 1 - i) < 0 or (c - i) > (b_size - 1) or (c - i) < 0:
+                    continue
+                mark = self.playboard.board[(b_size - 1) - i][c - i]
+                if mark == hand:
+                    continuous += 1
+                    if continuous >= 3:
+                        num_diagonal2 += 1
+                else:
+                    continuous = 0
+            continuous = 0
         num_three = num_horizen + num_vertical + num_diagonal1 + num_diagonal2
 
         return num_three
