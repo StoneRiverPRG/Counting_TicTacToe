@@ -3,6 +3,12 @@
 # Counting TicTacToe Wood 3 League
 # Get greater count of three in a row!
 
+""" Counting TicTacToe [summary]
+
+Todo:
+
+
+"""
 # TODO: #1 class化
 # ToDo: 2ゲーム目入ったときの検出、初期化
 # ToDo: inputまとめられる？
@@ -14,6 +20,11 @@ from enum import Enum, auto
 
 # マスの状態
 class BoardState(Enum):
+    """BoardState [summary]
+
+    Args:
+        Enum ([type]): [description]
+    """
     BLANK = auto()
     PLAYER = auto()
     AI = auto()
@@ -207,6 +218,19 @@ class TicTacToe():
     # TODO #16 : チェックステイト機能追加、ゲームリセット機能追加する
     def check_state(self):
         pass
+
+    # TODO : 評価関数
+    def evaluate(self, position):
+        """evaluate [summary]
+
+        Args:
+            position ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+
+        return 10
 
     # プレイヤーの入力
     def player_input(self):
