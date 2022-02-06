@@ -221,19 +221,20 @@ class TicTacToe():
 
 
     def evaluate(self, position):
-        """evaluate [summary]
+        """evaluate return board evaluate value.
         [extend summary]
 
         Args:
-            position (int tuple): [description]
+            position (int tuple): (row, col) type coordinate
 
         Returns:
-            int: [description]
+            int: evaluate value
 
         Todo:
-            - TODO: 評価関数として成立させる。
+            - TODO: #18 評価関数として成立させる。
             -
         """
+
 
         return 10
 
