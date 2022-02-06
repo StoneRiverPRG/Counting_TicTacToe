@@ -94,10 +94,25 @@ class TicTacToe():
             else:
                 self.put_hand(False, self.opponent_row, self.opponent_col)
 
+            # best value
+            value =  0
+            best_value = 0
+            best_pos = self.valid_actions[0]
 
-            print(self.valid_actions[0][0], self.valid_actions[0][1])
+            for pos in self.valid_actions:
+                value = self.evaluate(pos)
+                if value > best_value:
+                    best_value = value
+                    best_pos = pos
+            print(f"best_value: {best_value}, pos: {best_pos}", file=sys.stderr)
+
+            # put hand
+            set_row = best_pos[0]
+            set_col = best_pos[1]
+            print(set_row, set_col)
+
             # Player put_hand
-            self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
+            self.put_hand(True, set_row, set_col)
             num_three = self.Check_Lines(True)
             print(f"Lines = {num_three}",file=sys.stderr)
 
@@ -155,6 +170,19 @@ class TicTacToe():
             - aaa
         """
         self.playboard.board[row][col] = hand
+
+
+    def delete_hand(self, row, col):
+        """delete_hand [summary]
+
+        Args:
+            row ([type]): [description]
+            col ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        self.set_hand(BoardState.BLANK, row, col)
 
 
     # TODO: #14 row , colがboard list の範囲内かチェックする
@@ -264,13 +292,20 @@ class TicTacToe():
         # function variant
         value = 0
         best_value = 0
+        Ai_lines = self.Check_Lines(False)
+        Player_lines = self.Check_Lines(True)
         row, col = position
 
         # evaluate part
+        self.set_hand(BoardState.PLAYER, row, col)
+        Ai_diff = self.Check_Lines(False) - Ai_lines
+        Player_diff = self.Check_Lines(True) - Player_lines
+        self.delete_hand(row, col)
+
+        value += Ai_diff * 3 + Player_diff * 5
 
 
-
-        return best_value
+        return value
 
     # プレイヤーの入力
     def player_input(self):
