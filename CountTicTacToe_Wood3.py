@@ -58,6 +58,20 @@ class Board():
         print("", file=sys.stderr)
 
 
+    def Count_Blank(self):
+        """Count_Blank [summary]
+
+        Returns:
+            [type]: [description]
+        """
+        num_blank = 0
+        for row in self.board:
+            for col in row:
+                if col == BoardState.BLANK:
+                    num_blank += 1
+        return num_blank
+
+
 
 class TicTacToe():
 
@@ -301,6 +315,9 @@ class TicTacToe():
         Ai_diff = self.Check_Lines(False) - Ai_lines
         Player_diff = self.Check_Lines(True) - Player_lines
         self.delete_hand(row, col)
+        # if row + 1 < self.playboard.size:
+        #     if self.playboard.board[row + 1][col] == BoardState.PLAYER:
+        #         value += 1
 
         value += Ai_diff * 3 + Player_diff * 5
 
