@@ -299,7 +299,7 @@ class TicTacToe():
             int: evaluate value
 
         Todo:
-            - TODO: #18 評価関数として成立させる。
+            - TODO: #18 評価関数として成立させた。
             - copy instance object?
             - set hand -> check lines -> deleet hand ?
         """
