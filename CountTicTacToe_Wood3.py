@@ -136,6 +136,27 @@ class TicTacToe():
         # TODO #7:boardに値を更新
         self.playboard.board[row][col] = hand
 
+    def set_hand(self, hand, row, col):
+        """set_hand set hand for only evaluate
+        without can_put_hand(), set hand forced.
+
+        Args:
+            hand (BoardState): PLAYER or AI or BLANK
+            row (int): number of row
+            col (int): number of column
+
+        Returns:
+            [type]: None
+
+        Examples:
+            aaa
+
+        Todo:
+            - aaa
+        """
+        self.playboard.board[row][col] = hand
+
+
     # TODO: #14 row , colがboard list の範囲内かチェックする
     # (row, col)がBLANKならTrue
     def can_put_hand(self, row, col):
@@ -232,11 +253,24 @@ class TicTacToe():
 
         Todo:
             - TODO: #18 評価関数として成立させる。
-            -
+            - copy instance object?
+            - set hand -> check lines -> deleet hand ?
         """
+        # check position type
+        if len(position) != 2:
+            print(f"Args error. Is position {position} tuple?", file=sys.stderr)
+            return -1
+
+        # function variant
+        value = 0
+        best_value = 0
+        row, col = position
+
+        # evaluate part
 
 
-        return 10
+
+        return best_value
 
     # プレイヤーの入力
     def player_input(self):
