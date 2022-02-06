@@ -138,6 +138,10 @@ class TicTacToe():
             # 盤面表示
             self.display_board()
 
+            # board state check
+            self.check_state()
+
+
         """
         while self.state == GameState.GAME:
             if self.my_turn:
@@ -285,7 +289,12 @@ class TicTacToe():
 
     # TODO #16 : チェックステイト機能追加、ゲームリセット機能追加する
     def check_state(self):
-        pass
+        """check_state [summary]
+        """
+        if self.playboard.Count_Blank() <= 1:
+            self.state = GameState.FULL
+            self.playboard = Board()
+            print("reset board", file=sys.stderr)
 
 
     def evaluate(self, position):
@@ -359,21 +368,21 @@ class TicTacToe():
           return True if a == b == c and a != BoardState.BLANK else False
 
     # ゲームの状態を更新
-    def check_state(self):
-        for i in range(3):
-            if self.judge(*self.board[i:9:3]) or self.judge(*self.board[3*i:3*i+3]) or self.judge(*self.board[0:9:4]) or self.judge(*self.board[2:7:2]):
-                if self.my_turn:
-                    self.state = GameState.PLAYER_WIN
-                    return
-                else:
-                    self.state = GameState.AI_WIN
-                    return
+    # def check_state(self):
+    #     for i in range(3):
+    #         if self.judge(*self.board[i:9:3]) or self.judge(*self.board[3*i:3*i+3]) or self.judge(*self.board[0:9:4]) or self.judge(*self.board[2:7:2]):
+    #             if self.my_turn:
+    #                 self.state = GameState.PLAYER_WIN
+    #                 return
+    #             else:
+    #                 self.state = GameState.AI_WIN
+    #                 return
 
-        if all(BoardState.BLANK != state for state in self.board):
-            self.state = GameState.FULL
-            return
+    #     if all(BoardState.BLANK != state for state in self.board):
+    #         self.state = GameState.FULL
+    #         return
 
-        self.state = GameState.GAME
+    #     self.state = GameState.GAME
 
 
 tictactoe = TicTacToe()
