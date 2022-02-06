@@ -58,6 +58,20 @@ class Board():
         print("", file=sys.stderr)
 
 
+    def Count_Blank(self):
+        """Count_Blank [summary]
+
+        Returns:
+            int: number of Blank
+        """
+        num_blank = 0
+        for row in self.board:
+            for col in row:
+                if col == BoardState.BLANK:
+                    num_blank += 1
+        return num_blank
+
+
 
 class TicTacToe():
 
@@ -94,10 +108,30 @@ class TicTacToe():
             else:
                 self.put_hand(False, self.opponent_row, self.opponent_col)
 
+            # best value
+            value =  0
+            best_value = 0
+            num_blank = self.playboard.Count_Blank()
+            best_pos = self.valid_actions[0]
+            if num_blank >= 99:
+                best_pos = (4, 4)
+                if not self.can_put_hand(4, 4):
+                    best_pos = (5, 5)
 
-            print(self.valid_actions[0][0], self.valid_actions[0][1])
+            for pos in self.valid_actions:
+                value = self.evaluate(pos)
+                if value > best_value:
+                    best_value = value
+                    best_pos = pos
+            print(f"best_value: {best_value}, pos: {best_pos}", file=sys.stderr)
+
+            # put hand
+            set_row = best_pos[0]
+            set_col = best_pos[1]
+            print(set_row, set_col)
+
             # Player put_hand
-            self.put_hand(True, self.valid_actions[0][0], self.valid_actions[0][1])
+            self.put_hand(True, set_row, set_col)
             num_three = self.Check_Lines(True)
             print(f"Lines = {num_three}",file=sys.stderr)
 
@@ -135,6 +169,40 @@ class TicTacToe():
 
         # TODO #7:boardに値を更新
         self.playboard.board[row][col] = hand
+
+    def set_hand(self, hand, row, col):
+        """set_hand set hand for only evaluate
+        without can_put_hand(), set hand forced.
+
+        Args:
+            hand (BoardState): PLAYER or AI or BLANK
+            row (int): number of row
+            col (int): number of column
+
+        Returns:
+            [type]: None
+
+        Examples:
+            aaa
+
+        Todo:
+            - aaa
+        """
+        self.playboard.board[row][col] = hand
+
+
+    def delete_hand(self, row, col):
+        """delete_hand [summary]
+
+        Args:
+            row ([type]): [description]
+            col ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        self.set_hand(BoardState.BLANK, row, col)
+
 
     # TODO: #14 row , colがboard list の範囲内かチェックする
     # (row, col)がBLANKならTrue
@@ -221,21 +289,47 @@ class TicTacToe():
 
 
     def evaluate(self, position):
-        """evaluate [summary]
+        """evaluate return board evaluate value.
         [extend summary]
 
         Args:
-            position (int tuple): [description]
+            position (int tuple): (row, col) type coordinate
 
         Returns:
-            int: [description]
+            int: evaluate value
 
         Todo:
-            - TODO: 評価関数として成立させる。
-            -
+            - TODO: #18 評価関数として成立させた。
+            - copy instance object?
+            - set hand -> check lines -> deleet hand ?
         """
+        # check position type
+        if len(position) != 2:
+            print(f"Args error. Is position {position} tuple?", file=sys.stderr)
+            return -1
 
-        return 10
+        # function variant
+        value = 0
+        best_value = 0
+        Ai_lines = self.Check_Lines(False)
+        Player_lines = self.Check_Lines(True)
+        row, col = position
+
+        # evaluate part
+        self.set_hand(BoardState.PLAYER, row, col)
+        Player_diff = self.Check_Lines(True) - Player_lines
+        self.delete_hand(row, col)
+        self.set_hand(BoardState.AI, row, col)
+        Ai_diff = self.Check_Lines(False) - Ai_lines
+        self.delete_hand(row, col)
+        # if row + 1 < self.playboard.size:
+        #     if self.playboard.board[row + 1][col] == BoardState.PLAYER:
+        #         value += 1
+
+        value += Ai_diff * 3 + Player_diff * 5
+
+
+        return value
 
     # プレイヤーの入力
     def player_input(self):
