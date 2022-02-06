@@ -62,7 +62,7 @@ class Board():
         """Count_Blank [summary]
 
         Returns:
-            [type]: [description]
+            int: number of Blank
         """
         num_blank = 0
         for row in self.board:
@@ -111,7 +111,12 @@ class TicTacToe():
             # best value
             value =  0
             best_value = 0
+            num_blank = self.playboard.Count_Blank()
             best_pos = self.valid_actions[0]
+            if num_blank >= 99:
+                best_pos = (4, 4)
+                if not self.can_put_hand(4, 4):
+                    best_pos = (5, 5)
 
             for pos in self.valid_actions:
                 value = self.evaluate(pos)
@@ -312,8 +317,10 @@ class TicTacToe():
 
         # evaluate part
         self.set_hand(BoardState.PLAYER, row, col)
-        Ai_diff = self.Check_Lines(False) - Ai_lines
         Player_diff = self.Check_Lines(True) - Player_lines
+        self.delete_hand(row, col)
+        self.set_hand(BoardState.AI, row, col)
+        Ai_diff = self.Check_Lines(False) - Ai_lines
         self.delete_hand(row, col)
         # if row + 1 < self.playboard.size:
         #     if self.playboard.board[row + 1][col] == BoardState.PLAYER:
