@@ -219,15 +219,20 @@ class TicTacToe():
     def check_state(self):
         pass
 
-    # TODO : 評価関数
+
     def evaluate(self, position):
         """evaluate [summary]
+        [extend summary]
 
         Args:
-            position ([type]): [description]
+            position (int tuple): [description]
 
         Returns:
-            [type]: [description]
+            int: [description]
+
+        Todo:
+            - TODO: 評価関数として成立させる。
+            -
         """
 
         return 10
